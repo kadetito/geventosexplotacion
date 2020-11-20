@@ -1,0 +1,136 @@
+<app-header></app-header>
+<!-- <ng-sidebar-container> -->
+<!-- A sidebar -->
+<!-- <ng-sidebar class="mt-5" mode="slide" [(opened)]="_opened">
+      <div class="row  m0 p0">
+          <div class="col-12 bgblanco">
+              <div class="row">
+                  <div class="col-12">
+                      <a [routerLinkActive]="['active']" class="nav-link" [routerLink]="['/', 'listadoinicial']"  >Incidencias DEFCON-3/2/1</a>
+                      <a [routerLinkActive]="['active']" class="nav-link"   [routerLink]="['/', 'listadosinafectacion']" >Incidencias sin afectación a servicio</a>
+                      <a [routerLinkActive]="['active']"  class="nav-link navmodificado2"  [routerLink]="['/', 'administracion']" >Administración</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </ng-sidebar> -->
+
+<!-- <div ng-sidebar-content > -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 mt-5">
+            <div class="tabbable" id="tabs-850675">
+                <app-botonestab></app-botonestab>
+
+                <div class="tab-content p-5">
+                    <div class="tab-pane active" id="panel-813817">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card p-3 card-altura-minima">
+                                    <h3>Crear usuarios</h3>
+                                    <p class="text-center tamaicon"><i class="fa fa-user"></i></p>
+                                    <p class="mb-3">
+                                        Puede crear nuevos usuarios para supervisar.
+                                    </p>
+                                    <p class="text-center">
+                                        <button [routerLink]="['/listapersonas']" class="btn btn-warning ml-1">
+                      Lista de usuarios
+                    </button>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card p-3 card-altura-minima">
+                                    <h3>Grupo resolutor</h3>
+                                    <p class="text-center tamaicon">
+                                        <i class="fa fa-users"></i>
+                                    </p>
+                                    <p class="mb-3">Subir y actualizar grupos resolutores.</p>
+                                    <p class="text-center">
+                                        <button [routerLink]="['/listagruporesolutor']" class="btn btn-warning ml-1">
+                      Actualizar
+                    </button>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card p-3 card-altura-minima">
+                                    <h3>Servicio afectado</h3>
+                                    <p class="text-center tamaicon">
+                                        <i class="fa fa-heartbeat"></i>
+                                    </p>
+                                    <p class="mb-3">Subir y actualizar servicio afectado.</p>
+                                    <p class="text-center">
+                                        <button [routerLink]="['/listaservicioafectado']" class="btn btn-warning ml-1">
+                      Actualizar
+                    </button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- </div> -->
+<app-footer></app-footer>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Crear nuevo usuario</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Nombre y apellidos *</label>
+            <input required type="text" [(ngModel)]="datoregistro.nombres" name="nombres" autocomplete="off" class="form-control" placeholder="Nombre y apellidos" />
+        </div>
+        <div class="form-group">
+            <label>E-mail *</label>
+            <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required type="email" [(ngModel)]="datoregistro.email" name="email" autocomplete="off" class="form-control" placeholder="E-mail" />
+        </div>
+        <div class="form-group">
+            <label>Password *
+        <small class="text-muted"
+          >(La contraseña debe tener al menos 6 carácteres.)</small
+        ></label
+      >
+      <input
+        pattern=".{6,}"
+        required
+        type="password"
+        [(ngModel)]="datoregistro.password"
+        name="password"
+        autocomplete="off"
+        class="form-control"
+        placeholder="Password"
+      />
+    </div>
+    <div class="form-group">
+      <label>Teléfono</label>
+            <input maxlength="9" type="text" [(ngModel)]="datoregistro.telefono" name="telefono" autocomplete="off" class="form-control" placeholder="Teléfono" />
+        </div>
+        <div class="form-group">
+            <label>Dirección</label>
+            <input type="text" [(ngModel)]="datoregistro.direccion" name="direccion" autocomplete="off" class="form-control" placeholder="Dirección" />
+        </div>
+        <div class="form-group text-center mt-5">
+            <button (click)="guardarUsuario()" class="btn btn-info">
+        Añadir usuario
+      </button>
+        </div>
+    </div>
+</ng-template>
+
+<!-- </ng-sidebar-container> -->

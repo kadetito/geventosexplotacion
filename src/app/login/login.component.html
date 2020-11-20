@@ -1,0 +1,23 @@
+<div class="limiter animated fadeInLeft">
+    <div class="container-login100">
+        <div class="wrap-login100 p-t-50 p-b-90">
+            <form [formGroup]="angForm" (ngSubmit)="postdata(angForm)" autocomplete="off" class="login100-form validate-form flex-sb flex-w">
+                <span class="login100-form-title p-b-51">
+            Gestión eventos explotación
+          </span>
+                <div class="wrap-input100 m-b-16 ml-4 mr-4">
+                    <input type="email" name="email" formControlName="email" autocomplete="off" class="input100" required placeholder="E-mail" />
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 m-b-16 ml-4 mr-4">
+                    <input type="password" name="Password" formControlName="password" autocomplete="off" class="input100" placeholder="Password" required minlength="6" />
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="container-login100-form-btn m-t-17 ml-4 mr-4">
+                    <button type="submit" class="login100-form-btn">Ingresar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+<app-header></app-header>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 mt-5">
+            <div class="tabbable" id="tabs-850675">
+                <app-botonestab></app-botonestab>
+
+                <div class="tab-content p-5">
+                    <div class="tab-pane active" id="panel-813817">
+                        <div clas="row">
+                            <div class="col-12">
+                                <h2>Modificar usuario</h2>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-md-4 text-center">
+                                        <div class="image-upload mt-3">
+                                            <form [formGroup]="formFileUp" novalidate>
+                                                <p *ngIf="
+                            registro.imagen != null || registro.imagen != ''
+                          ">
+                                                    <img src="{{ registro.imagen }}" class="imagenprevio" />
+                                                </p>
+                                                <p *ngIf="
+                            registro.imagen == '' || registro.imagen == null
+                          ">
+                                                    <img src="../../../assets/nophoto.jpg" class="imagenprevio" />
+                                                </p>
+                                                <label for="file-upload" class="custom-file-upload">
+                          <i class="fa fa-cloud-upload"></i> Subir foto
+                        </label>
+                                                <input name="id_persona" formControlName="id_persona" type="hidden" />
+                                                <input name="imageUrl" formControlName="imagen" id="file-upload" type="file" class="custom-file-input" accept="image/*" (change)="handleInputChange($event)" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <form [formGroup]="modifyPersona" novalidate>
+                                            <input type="hidden" formControlName="id_persona" />
+                                            <ul>
+                                                <li class="mt-3">
+                                                    Nombre:
+                                                    <input name="nombres" formControlName="nombres" type="text" class="form-control" />
+                                                </li>
+                                                <li class="mt-3">
+                                                    E-mail:
+                                                    <input name="email" formControlName="email" type="text" class="form-control" />
+                                                </li>
+                                                <li class="mt-3">
+                                                    Password:
+                                                    <input name="password" formControlName="password" type="text" class="form-control" />
+                                                </li>
+                                                <li class="mt-3">
+                                                    Teléfono:
+                                                    <input name="telefono" formControlName="telefono" type="text" class="form-control" />
+                                                </li>
+                                                <li class="mt-3">
+                                                    Dirección:
+                                                    <input name="direccion" formControlName="direccion" type="text" class="form-control" />
+                                                </li>
+                                                <li class="mt-3">
+                                                    Rol:
+
+                                                    <select class="form-control" name="id_rol" formControlName="id_rol">
+                            <option
+                              *ngFor="let rol of roles"
+                              value="{{ rol.id_rol }}"
+                            >
+                              {{ rol.rol_name }}
+                            </option>
+                          </select>
+                                                </li>
+                                            </ul>
+                                            <div class="form-group text-center mt-5">
+                                                <a [routerLink]="['/listapersonas']" class="btn btn-primary btn-lineal">Volver</a
+                        >
+                        &nbsp;
+                        <button
+                          (click)="updatePersona()"
+                          type="submit"
+                          [disabled]="modifyPersona.invalid"
+                          class="btn btn-primary btn-lineal"
+                        >
+                          Modificar persona
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

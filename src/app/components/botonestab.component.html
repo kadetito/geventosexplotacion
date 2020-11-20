@@ -1,0 +1,11 @@
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a [routerLinkActive]="['active']" class="nav-link" [routerLink]="['/', 'eventos']" >Eventos con incidencia</a>
+    </li>
+    <li class="nav-item">
+        <a [routerLinkActive]="['active']" class="nav-link" [routerLink]="['/', 'informativos']" >Eventos informativos</a>
+    </li>
+    <li *ngIf="user.id_rol=='8'" class="nav-item">
+        <a [routerLinkActive]="['active']" class="nav-link navmodificado2" [routerLink]="['/', 'administracion']" >Administración</a>
+    </li>
+</ul>

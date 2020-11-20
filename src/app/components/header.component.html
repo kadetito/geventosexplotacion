@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark fixed-top">
+
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="navbar-toggler-icon"></span>
+				</button> <img class="logoimage" src="./assets/logotransparent.png" alt="SABIS" /> <b class="whitext">| Gestión eventos explotación - BS -</b>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="navbar-nav navbar-nav ml-md-auto">
+
+            <li class="nav-item active">
+                <a class="nav-link curpointer" (click)="open(ayuda)"><i class="fa fa-question-circle"></i></a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">{{ user.nombres }}</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" [routerLink]="['/', 'perfil', user.id_persona]">Perfil</a>
+                    <a class="dropdown-item" [routerLink]="['/', 'abririncidencia', user.id_persona]">Abrir incidencia</a>
+                </div>
+            </li>
+            <li class="nav-item mr-3">
+                <a class="nav-link" href="#" (click)="Logout()">
+                    <i class="fa fa-power-off"></i>
+                </a>
+            </li>
+        </ul>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2 input-sm p-3 searchinput" type="text" />
+            <button class="btn btn-primary my-2 my-sm-0 botonsearch" type="submit">
+							<i class="fa fa-search"></i>
+						</button>
+        </form>
+
+    </div>
+</nav>
+
+
+
+
+
+
+
+
+<!--MODAL NUEVA TAREA-->
+
+<ng-template #ayuda let-modal class="modal-lg">
+
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Ayuda</h4>
+    
+        <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      
+        <app-ayuda></app-ayuda>
+          
+          </div>
+</ng-template>
+  

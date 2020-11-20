@@ -1,0 +1,43 @@
+// CSS Reset, comment out if not required or using a different module
+//@import '~minireset.css/minireset';
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@import url('//fonts.googleapis.com/icon?family=Material+Icons');
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
+@import '~@swimlane/ngx-datatable/themes/dark.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+@include mat-core();
+
+
+$primary: mat-palette($mat-cyan, 500);
+$accent:  mat-palette($mat-light-blue, 900, A200, A400);
+$warn:    mat-palette($mat-red, 200);
+
+$config: mat-typography-config();
+
+$theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+
+body {
+  font-family: mat-font-family($config);
+  font-weight: normal;
+  margin: 0;
+}
+
+
+// @import "~igniteui-angular/lib/core/styles/themes/index";
+// // Uncomment the following lines if you want to add a custom palette:
+// // $primary: #731963 !default;
+// // $secondary: #ce5712 !default;
+// // $app-palette: igx-palette($primary, $secondary);
+
+// /* autoprefixer grid: on */
+
+// @include igx-core();
+// @include igx-theme($default-palette);
+
+/* Importing Bootstrap SCSS file. */
+//@import '~bootstrap/scss/bootstrap';

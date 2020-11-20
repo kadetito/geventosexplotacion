@@ -1,0 +1,576 @@
+<app-header> </app-header>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 mt-5">
+      <div class="tabbable" id="tabs-850675">
+        <app-botonestab></app-botonestab>
+        <div class="tab-content p-5">
+          <div class="tab-pane active" id="panel-813817">
+            <form [formGroup]="Modificacion" novalidate>
+              <div class="row">
+                <div class="col-md-3">
+                  <input
+                    type="hidden"
+                    formControlName="id_evento"
+                    name="id_evento"
+                  />
+                  <!--FLAG-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'">{{
+                        rowdetalle.gee_flag
+                      }}</span>
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_flag">Flag: </label>
+
+                        <span class="miniradio">Relevante</span>
+                        <input
+                          formControlName="gee_flag"
+                          name="gee_flag"
+                          type="radio"
+                          value="S"
+                        />
+                        <span class="ml-5 miniradio">No relevante</span>
+                        <input
+                          formControlName="gee_flag"
+                          name="gee_flag"
+                          type="radio"
+                          value="N"
+                        />
+                      </span>
+                    </div>
+                  </div>
+                  <!--TIPO-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'">{{
+                        rowdetalle.gee_tipo
+                      }}</span>
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_tipo">Tipo: </label>
+                        <select
+                          class="form-control"
+                          formControlName="gee_tipo"
+                          name="gee_tipo"
+                        >
+                          <option
+                            *ngFor="let tipo of tipos"
+                            value="{{ tipo.id_tipo }}"
+                          >
+                            {{ tipo.tipo_nombre }}
+                          </option>
+                        </select>
+                      </span>
+                    </div>
+                  </div>
+                  <!--FECHA INICIO-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'">{{
+                        rowdetalle.gee_fecha_inicio
+                      }}</span>
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_flag">Fecha inicio: </label>
+                        <div class="input-group">
+                          <input
+                            class="form-control"
+                            placeholder="{{ rowdetalle.gee_fecha_inicio }}"
+                            [readonly]="true"
+                            name="gee_fecha_inicio"
+                            formControlName="gee_fecha_inicio"
+                            ngbDatepicker
+                            #d="ngbDatepicker"
+                          />
+
+                          <div class="input-group-append">
+                            <button
+                              class="btn btn-outline-secondary calendar"
+                              (click)="d.toggle()"
+                              type="button"
+                            >
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                  <!--HORA INICIO-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'"
+                        >{{ rowdetalle.gee_hora_inicio }}}</span
+                      >
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_hora_inicio">Hora Inicio: </label>
+                        <input
+                          formControlName="gee_hora_inicio"
+                          required
+                          id="reloj"
+                          style="background-color: white"
+                          placeholder="00:00"
+                          class="form-control hora"
+                          type="text"
+                          [ngxTimepicker]="fullTime"
+                          [format]="24"
+                          readonly
+                        />
+
+                        <ngx-material-timepicker
+                          #fullTime
+                          [minutesGap]="15"
+                        ></ngx-material-timepicker>
+                      </span>
+                    </div>
+                  </div>
+                  <!--HORA INICIO INDISPONIBILIDAD-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'"
+                        >{{
+                          rowdetalle.gee_hora_inicio_indisponibilidad
+                        }}}</span
+                      >
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_hora_inicio_indisponibilidad"
+                          >Hora Inicio Indisponibilidad:
+                        </label>
+                        <input
+                          formControlName="gee_hora_inicio_indisponibilidad"
+                          required
+                          id="reloj"
+                          style="background-color: white"
+                          placeholder="00:00"
+                          class="form-control hora"
+                          type="text"
+                          [ngxTimepicker]="fullTime"
+                          [format]="24"
+                          readonly
+                        />
+
+                        <ngx-material-timepicker
+                          #fullTime
+                          [minutesGap]="15"
+                        ></ngx-material-timepicker>
+                      </span>
+                    </div>
+                  </div>
+                  <!--FECHA FIN-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'">{{
+                        rowdetalle.gee_fecha_fin
+                      }}</span>
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_flag">Fecha Fin: </label>
+                        <div class="input-group">
+                          <input
+                            class="form-control"
+                            [readonly]="true"
+                            placeholder="{{ rowdetalle.gee_fecha_fin }}"
+                            name="gee_fecha_fin"
+                            formControlName="gee_fecha_fin"
+                            ngbDatepicker
+                            #h="ngbDatepicker"
+                          />
+
+                          <div class="input-group-append">
+                            <button
+                              class="btn btn-outline-secondary calendar"
+                              (click)="h.toggle()"
+                              type="button"
+                            >
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                  <!--HORA FIN-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'"
+                        >{{ rowdetalle.gee_hora_fin_evento }}}</span
+                      >
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_hora_fin_evento">Hora Fin: </label>
+                        <input
+                          formControlName="gee_hora_fin_evento"
+                          required
+                          id="reloj"
+                          style="background-color: white"
+                          placeholder="00:00"
+                          class="form-control hora"
+                          type="text"
+                          [ngxTimepicker]="fullTime"
+                          [format]="24"
+                          readonly
+                        />
+
+                        <ngx-material-timepicker
+                          #fullTime
+                          [minutesGap]="15"
+                        ></ngx-material-timepicker>
+                      </span>
+                    </div>
+                  </div>
+                  <!--HORA FIN INDISPONIBILIDAD-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'"
+                        >{{ rowdetalle.gee_hora_fin_indisponibilidad }}}</span
+                      >
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_hora_fin_indisponibilidad"
+                          >Hora Fin Indisponibilidad:
+                        </label>
+                        <input
+                          formControlName="gee_hora_fin_indisponibilidad"
+                          required
+                          id="reloj"
+                          style="background-color: white"
+                          placeholder="00:00"
+                          class="form-control hora"
+                          type="text"
+                          [ngxTimepicker]="fullTime"
+                          [format]="24"
+                          readonly
+                        />
+
+                        <ngx-material-timepicker
+                          #fullTime
+                          [minutesGap]="15"
+                        ></ngx-material-timepicker>
+                      </span>
+                    </div>
+                  </div>
+                  <!--ORIGEN-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'">{{
+                        rowdetalle.gee_origen
+                      }}</span>
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_tipo">Origen: </label>
+                        <select
+                          class="form-control"
+                          formControlName="gee_origen"
+                          name="gee_origen"
+                        >
+                          <option
+                            *ngFor="let origen of origenes"
+                            value="{{ origen.id_origen }}"
+                          >
+                            {{ origen.origen_nombre }}
+                          </option>
+                        </select>
+                      </span>
+                    </div>
+                  </div>
+                  <!--NIVEL DEFCON-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'">{{
+                        rowdetalle.gee_nivel_defcon
+                      }}</span>
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_flag">Nivel Defcon: </label>
+
+                        <select
+                          class="form-control"
+                          formControlName="gee_nivel_defcon"
+                          name="gee_nivel_defcon"
+                        >
+                          <option value="{{ rowdetalle.gee_nivel_defcon }}">
+                            {{ rowdetalle.gee_nivel_defcon }}
+                          </option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                        </select>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <!--DESCRIPCION-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <label for="gee_descripcion"> Descripción:</label>
+                      <span *ngIf="user.id_rol != '8'">{{
+                        rowdetalle.gee_descripcion
+                      }}</span>
+                      <span *ngIf="user.id_rol == '8'">
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="gee_descripcion"
+                          name="gee_descripcion"
+                        />
+                      </span>
+                    </div>
+                  </div>
+
+                  <!--GRUPO RESOLUTOR-->
+
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'">{{
+                        rowdetalle.gee_resolutor
+                      }}</span>
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_resolutor">Grupo Resolutor: </label>
+                        <select
+                          class="form-control"
+                          formControlName="gee_resolutor"
+                          name="gee_resolutor"
+                        >
+                          <option
+                            *ngFor="let gruposres of gruposresolutores"
+                            value="{{ gruposres.id_grupo_resolutor }}"
+                          >
+                            {{ gruposres.grupo_resolutor_nombre }}
+                          </option>
+                        </select>
+                      </span>
+                    </div>
+                  </div>
+
+                  <!--SERVICIO AFECTADO-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'">{{
+                        rowdetalle.gee_servicio_afectado
+                      }}</span>
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_servicio_afectado"
+                          >Servicio Afectado:
+                        </label>
+                        <select
+                          class="form-control"
+                          formControlName="gee_servicio_afectado"
+                          name="gee_servicio_afectado"
+                        >
+                          <option
+                            *ngFor="let servicio of servicios"
+                            value="{{ servicio.id_servicio_afectado }}"
+                          >
+                            {{ servicio.servicio_afectado_nombre }}
+                          </option>
+                        </select>
+                      </span>
+                    </div>
+                  </div>
+                  <!-- TICKET-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'">{{
+                        rowdetalle.gee_ticket
+                      }}</span>
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_ticket">Ticket: </label>
+
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="gee_ticket"
+                          name="gee_ticket"
+                        />
+                      </span>
+                    </div>
+                  </div>
+                  <!--CONTENIDO-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'">{{
+                        rowdetalle.gee_contenido
+                      }}</span>
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_contenido"> Contenido:</label>
+                        <ckeditor
+                          [config]="{
+                            toolbar: ['link', '|', 'bold', 'italic']
+                          }"
+                          (ready)="onReady($event)"
+                          id="ibmeditor"
+                          placeholder="Escriba el texto"
+                          name="gee_contenido"
+                          formControlName="gee_contenido"
+                          [editor]="Editor"
+                          data=""
+                        ></ckeditor>
+                      </span>
+                    </div>
+                  </div>
+                  <!--ESTADO-->
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <span *ngIf="user.id_rol != '8'">{{
+                        rowdetalle.gee_estado
+                      }}</span>
+                      <span *ngIf="user.id_rol == '8'">
+                        <label for="gee_estado">Estado: </label>
+                        <select
+                          (change)="getCombo2()"
+                          class="form-control"
+                          formControlName="gee_estado"
+                          name="gee_estado"
+                        >
+                          <option
+                            *ngFor="let estado of estados"
+                            value="{{ estado.id_estado }}"
+                          >
+                            {{ estado.estado_nombre }}
+                          </option>
+                        </select>
+                      </span>
+                    </div>
+                  </div>
+                  <!--seleccion según relacionados-->
+
+                  <form [formGroup]="Relacionados" novalidate>
+                    <div
+                      class="row mt-2"
+                      *ngIf="rowdetalle.gee_estado == '4' && estatus != false"
+                    >
+                      <div class="col-11">
+                        <!--gee_estado es 4-->
+                        <span *ngIf="user.id_rol != '8'">{{
+                          rowdetalle.gee_estado
+                        }}</span>
+                        <span *ngIf="user.id_rol == '8'">
+                          <input
+                            type="hidden"
+                            class="form-control"
+                            formControlName="id_evento"
+                            name="id_evento"
+                          />
+
+                          <label for="gee_eventos_relacionados"
+                            >Eventos a relacionar:
+                          </label>
+                          <select
+                            class="form-control"
+                            formControlName="gee_eventos_relacionados"
+                            name="gee_eventos_relacionados"
+                          >
+                            <option
+                              *ngFor="let rowsev of norelac"
+                              value="{{ rowsev.id_evento }}"
+                              [innerHtml]="rowsev.gee_descripcion | slice: 0:65"
+                            ></option>
+                          </select>
+                        </span>
+                      </div>
+                      <div class="col-1">
+                        <button
+                          (click)="saveEventosRelacionados()"
+                          [disabled]="Relacionados.invalid"
+                          class="btn btn-circle2 btn-sm"
+                        >
+                          <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                  <form [formGroup]="Relacionados" novalidate>
+                    <div
+                      class="row mt-2"
+                      *ngIf="rowdetalle.gee_estado != '4' && estatus == true"
+                    >
+                      <div class="col-11">
+                        <!--es true pero gee_estado no es 4-->
+                        <span *ngIf="user.id_rol != '8'">{{
+                          rowdetalle.gee_estado
+                        }}</span>
+                        <span *ngIf="user.id_rol == '8'">
+                          <input
+                            type="hidden"
+                            class="form-control"
+                            formControlName="id_evento"
+                            name="id_evento"
+                          />
+
+                          <label for="gee_eventos_relacionados"
+                            >Eventos a relacionar:
+                          </label>
+                          <select
+                            class="form-control"
+                            formControlName="gee_eventos_relacionados"
+                            name="gee_eventos_relacionados"
+                          >
+                            <option
+                              *ngFor="let rowsev of norelac"
+                              value="{{ rowsev.id_evento }}"
+                              [innerHtml]="rowsev.gee_descripcion | slice: 0:65"
+                            ></option>
+                          </select>
+                        </span>
+                      </div>
+                      <div class="col-1">
+                        <button
+                          (click)="saveEventosRelacionados()"
+                          [disabled]="Relacionados.invalid"
+                          class="btn btn-circle2 btn-sm"
+                        >
+                          <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+
+                  <div
+                    class="row mt-3 mb-5"
+                    *ngIf="rowdetalle.gee_estado == '4'"
+                  >
+                    <div class="col-12">
+                      <h5 class="hcincolinea">
+                        Eventos ya relacionados con este evento
+                      </h5>
+                      <ul *ngFor="let relaev of yarelac">
+                        <li>
+                          <a
+                            [routerLinkActive]="['active']"
+                            [routerLink]="[
+                              '/detalleeventosrelacionadosinformativo',
+                              relaev.tokenid
+                            ]"
+                            >{{ relaev.gee_descripcion | slice: 0:180 }}</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div
+                    class="row mt-2"
+                    *ngIf="rowdetalle.gee_estado == '4' && estatus == false"
+                  >
+                    <div class="col-12"></div>
+                  </div>
+                  <!--/seleccion según relacionados-->
+                  <!--ESTADO-->
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-12 text-center" *ngIf="user.id_rol == '8'">
+                  <button
+                    (click)="guardaModificacionInformativo()"
+                    type="submit"
+                    class="btn btn-info"
+                  >
+                    Modificar evento
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,571 @@
+<ngx-spinner size="medium" color="#fff" type="pacman">
+  <p style="color: white">cargando, espere, por favor...</p>
+</ngx-spinner>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-9 p-0 mt-5 alignsegunscreen2">
+      <h2 class="hache2segunscreen">Eventos informativos</h2>
+    </div>
+
+    <div class="col-md-3 p-0 alignsegunscreen">
+      <div *ngIf="user.id_rol == '8'" class="mt-3">
+        <button (click)="open(nueva)" class="btn btn-primary btn-lineal">
+          <i class="fa fa-plus"></i> Crear nuevo evento
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-3 p-0 mt-2 text-left">
+      <div class="form">
+        <mat-form-field floatPlaceholder="never" color="accent">
+          <input matInput placeholder="Buscar" (keyup)="updateFilter($event)" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="col-9 p-0 mt-2 text-right">
+      <small>
+        <a
+          class="expansores"
+          href="javascript:void(0)"
+          (click)="table.rowDetail.expandAllRows()"
+          >Expandir todo</a
+        >
+
+        |
+
+        <a
+          class="expansores"
+          href="javascript:void(0)"
+          (click)="table.rowDetail.collapseAllRows()"
+          >Contraer todo</a
+        >
+      </small>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 p-0 m-0">
+      <ngx-datatable
+        #mydatatable
+        class="material expandable"
+        headerHeight="50"
+        [limit]="25"
+        [columnMode]="'force'"
+        footerHeight="50"
+        rowHeight="auto"
+        [rows]="rows"
+      >
+        <ngx-datatable-column name="gee_fecha_inicio" [maxWidth]="1860">
+          <ng-template ngx-datatable-header-template
+            ><span>Ordenar por fecha</span></ng-template
+          >
+
+          <ng-template
+            ngx-datatable-cell-template
+            let-rowIndex="rowIndex"
+            let-value="value"
+            let-row="row"
+          >
+            <div class="row">
+              <div class="col-md-2">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                {{ row.gee_fecha_inicio | slice: 0:10 }}
+              </div>
+              <div class="col-md-3">
+                <i class="fa fa-clock-o" aria-hidden="true"></i> Hora de inicio:
+                {{ row.gee_hora_inicio }}
+              </div>
+
+              <div class="col-md-5">
+                <span>
+                  <i class="fa fa-address-card-o" aria-hidden="true"></i>
+
+                  Asignada por:
+
+                  <a
+                    target="_blank"
+                    class="underhover"
+                    href="mailto:{{ user.email }}"
+                    >{{ user.nombres }}</a
+                  >
+                </span>
+              </div>
+              <!--FLAG-->
+              <div class="col-md-2 text-right">
+                <span>
+                  Flag:
+                  <b
+                    ><i
+                      class="fa fa-flag"
+                      [ngClass]="{
+                        relevante: row.gee_flag == 'S',
+                        norelevante: row.gee_flag == 'N'
+                      }"
+                      aria-hidden="true"
+                    ></i
+                  ></b>
+                </span>
+              </div>
+            </div>
+
+            <div class="row">
+              <!--TICKET-->
+              <div class="col-12 mt-3 mb-3">
+                <div class="inliner">
+                  <a
+                    href="javascript:void(0)"
+                    class="expansor2"
+                    title="Expandir/Colapsar"
+                    (click)="toggleExpandRow(row)"
+                  >
+                    <h3 class="hache3inline">
+                      <span *ngFor="let ticket of tickets">
+                        <span *ngIf="ticket.id_ticket == row.gee_ticket">
+                          {{ ticket.ticket_nombre | slice: 0:160 }} -
+                          {{ row.gee_descripcion | slice: 0:160 }}...
+                        </span>
+                      </span>
+                    </h3>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-row-detail
+          rowHeight="auto"
+          #myDetailRow
+          (toggle)="onDetailToggle($event)"
+        >
+          <ng-template
+            let-row="row"
+            let-expanded="expanded"
+            let-rowIndex="rowIndex"
+            ngx-datatable-row-detail-template
+          >
+            <div class="container-fluid">
+              <div class="row p0 m0 mb-3">
+                <!--HORA INICIO INDISPONIBILIDAD-->
+                <div class="col-4">
+                  <b>Hora inicio indisponibilidad: </b>
+                  {{ row.gee_hora_inicio_indisponibilidad }}
+                </div>
+                <!--HORA FIN INDISPONIBILIDAD-->
+                <div class="col-4">
+                  <b>Hora fin indisponibilidad:</b>
+                  {{ row.gee_hora_fin_indisponibilidad }}
+                </div>
+                <!--NIVEL DEFCON-->
+                <div class="col-4">
+                  <b>Nivel: </b> {{ row.gee_nivel_defcon }}
+                </div>
+              </div>
+              <!--DESCRIPCION-->
+              <div class="row p0 m0 mb-3">
+                <div class="col-12">
+                  <b>Descripcion: </b>
+                  <span [innerHtml]="row.gee_descripcion"></span>
+                </div>
+              </div>
+              <!--ORIGEN-->
+              <div class="row p0 m0 mb-3">
+                <div class="col-12">
+                  <span *ngFor="let origen of origenes">
+                    <span *ngIf="origen.id_origen == row.gee_origen">
+                      <b>Origen: </b>{{ origen.origen_nombre }}</span
+                    >
+                  </span>
+                </div>
+              </div>
+              <!--SERVICIOS AFECTADOS-->
+              <div class="row p0 m0 mb-3">
+                <div class="col-12">
+                  <span *ngFor="let servicio of servicios">
+                    <span
+                      *ngIf="
+                        servicio.id_servicio_afectado ==
+                        row.gee_servicio_afectado
+                      "
+                    >
+                      <b>Servicio afectado: </b>
+                      {{ servicio.servicio_afectado_nombre }}</span
+                    >
+                  </span>
+                </div>
+              </div>
+              <!--ESTADO-->
+              <div class="row p0 m0 mb-3">
+                <div class="col-12">
+                  <span *ngFor="let estado of estados">
+                    <span *ngIf="estado.id_estado == row.gee_estado">
+                      <b>Estado: </b> {{ estado.estado_nombre }}</span
+                    >
+                  </span>
+                </div>
+              </div>
+              <!--CONTENIDO-->
+              <div class="row p0 m0 mb-3">
+                <div class="col-md-6 pecont">
+                  <b>Contenido: </b>
+                  <span [innerHtml]="row.gee_contenido"></span>
+                </div>
+                <!--BOTONES-->
+                <div class="col-md-6 text-right" *ngIf="user.id_rol == '8'">
+                  <a
+                    class="btn btn-circle btn-sm"
+                    [routerLink]="[
+                      '/detalleeventoslistadoinformativo',
+                      row.tokenid
+                    ]"
+                    [routerLinkActive]="['active']"
+                  >
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </a>
+                  <button
+                    class="btn btn-circle btn-sm"
+                    (click)="borrarRegistro(row.tokenid)"
+                  >
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </div>
+
+                <div class="col-md-6 text-right" *ngIf="user.id_rol != '8'">
+                  <a
+                    class="btn btn-circle btn-sm"
+                    [routerLink]="[
+                      '/detalleeventoslistadoinformativo',
+                      row.tokenid
+                    ]"
+                    [routerLinkActive]="['active']"
+                  >
+                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  </a>
+                </div>
+
+                <div class="row p0 m0">
+                  <div class="col-12"></div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-row-detail>
+      </ngx-datatable>
+    </div>
+  </div>
+</div>
+
+<!--MODAL NUEVA TAREA-->
+
+<ng-template #nueva let-modal class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Crear nuevo evento</h4>
+
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="eventosForm" novalidate>
+      <input
+        formControlName="id_persona"
+        type="hidden"
+        name="id_persona"
+        class="form-control"
+      />
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <!--FEHCA INICIO-->
+            <label>Fecha de inicio*</label>
+
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                [readonly]="true"
+                name="gee_fecha_inicio"
+                formControlName="gee_fecha_inicio"
+                ngbDatepicker
+                #d="ngbDatepicker"
+              />
+
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary calendar"
+                  (click)="d.toggle()"
+                  type="button"
+                >
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--HORA INICIO-->
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Hora de inicio*</label>
+            <input
+              formControlName="gee_hora_inicio"
+              [format]="24"
+              [readonly]="true"
+              [ngxTimepicker]="gee_hora_inicio"
+              type="text"
+              name="gee_hora_inicio"
+              class="form-control"
+            />
+            <ngx-material-timepicker #gee_hora_inicio></ngx-material-timepicker>
+          </div>
+        </div>
+        <!--HORA INICIO INDISPONIBILIDAD-->
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Hora de inicio indisponibilidad*</label>
+
+            <input
+              formControlName="gee_hora_inicio_indisponibilidad"
+              [format]="24"
+              [readonly]="true"
+              [ngxTimepicker]="gee_hora_inicio_indisponibilidad"
+              type="text"
+              name="gee_hora_inicio_indisponibilidad"
+              class="form-control"
+            />
+            <ngx-material-timepicker
+              #gee_hora_inicio_indisponibilidad
+            ></ngx-material-timepicker>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!--FECHA FIN -->
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Fecha de finalización*</label>
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                [readonly]="true"
+                name="gee_fecha_fin"
+                formControlName="gee_fecha_fin"
+                ngbDatepicker
+                #h="ngbDatepicker"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary calendar"
+                  (click)="h.toggle()"
+                  type="button"
+                >
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--HORA FIN -->
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Hora de finalización*</label>
+            <input
+              formControlName="gee_hora_fin_evento"
+              [format]="24"
+              [readonly]="true"
+              [ngxTimepicker]="gee_hora_fin_evento"
+              type="text"
+              name="gee_hora_fin_evento"
+              class="form-control"
+            />
+            <ngx-material-timepicker
+              #gee_hora_fin_evento
+            ></ngx-material-timepicker>
+          </div>
+        </div>
+        <!--HORA FIN INDISPONIBILIDAD-->
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Hora de fin indisponibilidad*</label>
+            <input
+              formControlName="gee_hora_fin_indisponibilidad"
+              [format]="24"
+              [readonly]="true"
+              [ngxTimepicker]="gee_hora_fin_indisponibilidad"
+              type="text"
+              name="gee_hora_fin_indisponibilidad"
+              class="form-control"
+            />
+            <ngx-material-timepicker
+              #gee_hora_fin_indisponibilidad
+            ></ngx-material-timepicker>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!--TICKET-->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Ticket*</label>
+
+            <input
+              type="text"
+              class="form-control"
+              formControlName="gee_ticket"
+              name="gee_ticket"
+            />
+          </div>
+        </div>
+        <!--ORIGEN-->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Origen*</label>
+            <select
+              class="form-control"
+              formControlName="gee_origen"
+              name="gee_origen"
+            >
+              <option
+                *ngFor="let origen of origenes"
+                value="{{ origen.id_origen }}"
+              >
+                {{ origen.origen_nombre }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!--DESCRIPCION-->
+      <div class="form-group">
+        <label>Descripción*</label>
+        <input
+          formControlName="gee_descripcion"
+          type="text"
+          name="gee_descripcion"
+          class="form-control"
+        />
+      </div>
+      <!--SERVICIO AFECTADO-->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Servicio afectado*</label>
+            <select
+              class="form-control"
+              formControlName="gee_servicio_afectado"
+              name="gee_servicio_afectado"
+            >
+              <option
+                *ngFor="let servicio of servicios"
+                value="{{ servicio.id_servicio_afectado }}"
+              >
+                {{ servicio.servicio_afectado_nombre }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <!--NIVEL DEFCON-->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Nivel defcon*</label>
+
+            <select
+              class="form-control"
+              formControlName="gee_nivel_defcon"
+              name="gee_nivel_defcon"
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!--CONTENIDO-->
+      <div class="form-group">
+        <label>Contenido*</label>
+        <ckeditor
+          [config]="{
+            toolbar: ['link', '|', 'bold', 'italic']
+          }"
+          (ready)="onReady($event)"
+          id="ibmeditor"
+          placeholder="Escriba el texto"
+          name="gee_contenido"
+          formControlName="gee_contenido"
+          [editor]="Editor"
+          data=""
+        ></ckeditor>
+      </div>
+
+      <div class="row">
+        <!--GRUPO RESOLUTOR-->
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Grupo resolutor*</label>
+
+            <select
+              class="form-control"
+              formControlName="gee_resolutor"
+              name="gee_resolutor"
+            >
+              <option
+                *ngFor="let gruposres of gruposresolutores"
+                value="{{ gruposres.id_grupo_resolutor }}"
+              >
+                {{ gruposres.grupo_resolutor_nombre }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <!--FLAG-->
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Flag*</label>
+
+            <span class="miniradio">Relevante</span>
+            <input
+              formControlName="gee_flag"
+              name="gee_flag"
+              type="radio"
+              value="S"
+            />
+            <span class="ml-5 miniradio">No relevante</span>
+            <input
+              formControlName="gee_flag"
+              name="gee_flag"
+              type="radio"
+              value="N"
+            />
+          </div>
+        </div>
+        <!--ESTADO-->
+        <div class="col-md-4"></div>
+      </div>
+      <div class="form-group text-center mt-5">
+        <button
+          (click)="guardarEventoInformativo()"
+          [disabled]="eventosForm.invalid"
+          type="submit"
+          class="btn btn-info"
+        >
+          Crear evento
+        </button>
+        <div></div>
+      </div>
+    </form>
+  </div>
+</ng-template>

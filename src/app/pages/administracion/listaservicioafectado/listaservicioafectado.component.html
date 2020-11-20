@@ -1,0 +1,234 @@
+<app-header></app-header>
+<ngx-spinner size="medium" color="#fff" type="pacman">
+  <p style="color: white">Cargando, espere, por favor...</p>
+</ngx-spinner>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-12 mt-5">
+      <div class="tabbable" id="tabs-850675">
+        <ul class="nav nav-tabs">
+          <li class="nav-item mediaqdisplayyes">
+            <a
+              [routerLinkActive]="['active']"
+              class="nav-link"
+              (click)="_toggleSidebar()"
+              ><i class="fa fa-bars" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li class="nav-item mediaqdisplay">
+            <a
+              [routerLinkActive]="['active']"
+              class="nav-link"
+              [routerLink]="['/', 'eventos']"
+              data-toggle="tab"
+              >Eventos</a
+            >
+          </li>
+          <li class="nav-item mediaqdisplay">
+            <a
+              [routerLinkActive]="['active']"
+              class="nav-link"
+              [routerLink]="['/', 'informativos']"
+              data-toggle="tab"
+              >Eventos informativos</a
+            >
+          </li>
+          <li class="nav-item mediaqdisplay">
+            <a
+              [routerLinkActive]="['active']"
+              class="nav-link navmodificado2 active"
+              [routerLink]="['/', 'administracion']"
+              data-toggle="tab"
+              >Administración</a
+            >
+          </li>
+        </ul>
+
+        <div class="tab-content p-5">
+          <div class="tab-pane active" id="panel-813817">
+            <div class="row">
+              <div class="col-10 p-0 mt-5">
+                <h2 class="mb-4">Servicio afectado</h2>
+              </div>
+              <div class="col-2 p-0 mt-5"></div>
+            </div>
+
+            <div class="row">
+              <div class="col-9 text-left p-0 mt-2">
+                <span *ngIf="user.id_rol == '8'">
+                  <button
+                    (click)="open(nueva)"
+                    class="btn btn-primary btn-lineal"
+                  >
+                    <i class="fa fa-plus fa-3"></i> Actualizar lista desde archivo
+                  </button>
+                </span>
+              </div>
+              <div class="col-3 p-0 mt-2 text-right">
+                <div class="form">
+                  <mat-form-field floatPlaceholder="never" color="accent">
+                    <input
+                      matInput
+                      placeholder="Buscar"
+                      (keyup)="updateFilter($event)"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 p-0 m-0">
+                <ngx-datatable
+                  #mydatatable
+                  class="material striped"
+                  headerHeight="50"
+                  [limit]="25"
+                  [columnMode]="'force'"
+                  footerHeight="50"
+                  rowHeight="50"
+                  [rows]="rows"
+                  [messages]="my_messages"
+                >
+                  <ngx-datatable-column name="id_servicio_afectado" [maxWidth]="90">
+                    <ng-template ngx-datatable-header-template>
+                      <span>ID </span>
+                    </ng-template>
+                    <ng-template
+                      class="mat-column-id"
+                      ngx-datatable-cell-template
+                      let-rowIndex="rowIndex"
+                      let-value="value"
+                      let-row="row"
+                      ><div class="text-center">{{ row.id_servicio_afectado }}</div>
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <ngx-datatable-column
+                    name="nombres"
+                    [maxWidth]="930"
+                    prop="nombres"
+                  >
+                    <ng-template
+                      ngx-datatable-cell-template
+                      let-rowIndex="rowIndex"
+                      let-value="value"
+                      let-row="row"
+                    >
+
+                    <span
+                    title="Doble click para editar"
+                    (dblclick)="editing[rowIndex + '-servicio_afectado_nombre'] = true"
+                    *ngIf="!editing[rowIndex + '-servicio_afectado_nombre']"
+                  >
+                    {{ row.servicio_afectado_nombre }}
+                    <span class="text-muted2" *ngIf="row.servicio_afectado_nombre === null">
+                      vacío
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                  </span>
+      
+                  <input
+                    required
+                    autofocus
+                    (clickOutside)="editing[rowIndex + '-servicio_afectado_nombre'] = false"
+                    (keyup.enter)="
+                      updateValue($event, 'servicio_afectado_nombre', rowIndex)
+                    "
+                    *ngIf="editing[rowIndex + '-servicio_afectado_nombre']"
+                    type="text"
+                    class="form-control"
+                    [value]="row.servicio_afectado_nombre"
+                    [title]="row.id_servicio_afectado"
+                  />
+
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <!--VER -->
+                  <ngx-datatable-column name="ver" [maxWidth]="150">
+                    <ng-template ngx-datatable-header-template>
+                      <span></span>
+                    </ng-template>
+                    <ng-template
+                      class="mat-column-id"
+                      ngx-datatable-cell-template
+                      let-row="row"
+                    >
+                      <div class="text-center">
+                        <div class="row">
+                          <div class="col-12 p0 m0">
+                            <span *ngIf="user.id_rol == '8'">
+                              <button
+                                (click)="borrarRegistro(row, row.id_servicio_afectado)"
+                                class="btn btn-warning botonsizes ml-2"
+                              >
+                                <i class="fa fa-trash"></i>
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <!--VER -->
+                </ngx-datatable>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </div> -->
+<app-footer></app-footer>
+
+<!--NUEVA-->
+<ng-template #nueva let-modal class="modal-lg">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Subir archivo de Servicios Afectados</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="uploadForm" novalidate>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label>Fichero*</label>
+            <div class="input-group">
+<p>El archivo CSV debe cumplir con la estructura de la imagen.</p>
+              <img src="./assets/2020-10-13 14_21_22-Window.png" />
+              <input
+                    type="file"
+                    name="fileUpload"
+                    formControlName="fileUpload"
+                    (change)="handleInputChange($event)"
+             
+                    accept=".csv"
+                    />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="form-group text-center mt-5">
+        <button
+          (click)="handleInputChange($event)"
+          type="submit"
+          [disabled]="uploadForm.invalid"
+          class="btn btn-info"
+        >
+         Upload masivo
+        </button>
+      </div> -->
+    </form>
+  </div>
+</ng-template>
